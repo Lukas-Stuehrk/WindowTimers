@@ -70,6 +70,19 @@ SPEC_BEGIN(WindowTimersTests)
 
             [[expectFutureValue(theValue(called)) shouldEventually] beYes];
         });
+
+        it(@"should pass the additional arguments to the callback", ^ {
+            __block BOOL called = NO;
+            context[@"callback"] = ^(JSValue *firstArg, JSValue *secondArg, JSValue *thirdArg) {
+                called = YES;
+                [[[firstArg toString] should] equal:@"foo"];
+                [[[secondArg toString] should] equal:@"bar"];
+                [[[thirdArg toString] should] equal:@"foobar"];
+            };
+            [context evaluateScript:@"setTimeout(callback, 100, 'foo', 'bar', 'foobar');"];
+
+            [[expectFutureValue(theValue(called)) shouldEventually] beYes];
+        });
     });
 
     describe(@"The clearTimeout function", ^{
@@ -121,6 +134,19 @@ SPEC_BEGIN(WindowTimersTests)
             lastCallTime = CACurrentMediaTime();
             [context evaluateScript:@"setInterval(callback, 100)"];
             [[expectFutureValue(theValue(counter)) shouldEventually] beGreaterThan:theValue(5)];
+        });
+
+        it(@"should pass the additional arguments to the callback", ^ {
+            __block BOOL called = NO;
+            context[@"callback"] = ^(JSValue *firstArg, JSValue *secondArg, JSValue *thirdArg) {
+                called = YES;
+                [[[firstArg toString] should] equal:@"foo"];
+                [[[secondArg toString] should] equal:@"bar"];
+                [[[thirdArg toString] should] equal:@"foobar"];
+            };
+            [context evaluateScript:@"setInterval(callback, 100, 'foo', 'bar', 'foobar');"];
+
+            [[expectFutureValue(theValue(called)) shouldEventually] beYes];
         });
     });
 

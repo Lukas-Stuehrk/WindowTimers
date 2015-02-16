@@ -57,8 +57,13 @@
 }
 
 - (id)setTimeout {
-    return ^(JSValue *function, JSValue *timeout, ...) {
-        NSMutableArray *arguments = [NSMutableArray new];
+    return ^(JSValue *function, JSValue *timeout) {
+        NSArray *originalArguments = [JSContext currentArguments];
+        NSArray *arguments = @[];
+        if ([originalArguments count] > 2) {
+            arguments = [originalArguments subarrayWithRange:NSMakeRange(2,
+                    [originalArguments count] - 2)];
+        }
         return [self intervalWithCallable:function
                                   timeout:timeout
                                 arguments:arguments
@@ -77,7 +82,12 @@
 
 - (id)setInterval {
     return ^(JSValue *function, JSValue *timeout, ...) {
-        NSMutableArray *arguments = [NSMutableArray new];
+        NSArray *originalArguments = [JSContext currentArguments];
+        NSArray *arguments = @[];
+        if ([originalArguments count] > 2) {
+            arguments = [originalArguments subarrayWithRange:NSMakeRange(2,
+                    [originalArguments count] - 2)];
+        }
         return [self intervalWithCallable:function
                                   timeout:timeout
                                 arguments:arguments
