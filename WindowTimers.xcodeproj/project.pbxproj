@@ -208,8 +208,6 @@
 			mainGroup = C753EE0FC3E637F2AD96F881;
 			productRefGroup = C753E257828504EF6C0B7278 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-			);
 			projectRoot = "";
 			targets = (
 				C753E37191BA10FCC8DF3277 /* WindowTimers */,
@@ -420,6 +418,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = WindowTimers/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -435,6 +434,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = WindowTimers/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -451,6 +451,7 @@
 				C753EFFBF51036FB49F3507C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C753E8F4F5AD1C96F2536F38 /* Build configuration list for PBXNativeTarget "WindowTimersTests" */ = {
 			isa = XCConfigurationList;
@@ -459,6 +460,7 @@
 				C753E6FEB8426AE0CD14C879 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C753EECE69616EE407D31D65 /* Build configuration list for PBXProject "WindowTimers" */ = {
 			isa = XCConfigurationList;
