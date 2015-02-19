@@ -11,6 +11,7 @@
         _timeoutCounter = 0;
         _queue = dispatch_get_main_queue();
         _dispatchSourcesMapping = [NSMapTable weakToWeakObjectsMapTable];
+        self.tolerance = 10;
     }
     return self;
 }
@@ -31,10 +32,6 @@
             0,
             0,
             _queue);
-    dispatch_source_set_timer(dispatchSource,
-            dispatch_walltime(NULL, 0),
-            [timeout toInt32] * NSEC_PER_MSEC,
-            1ull * NSEC_PER_SEC);
     dispatch_source_set_event_handler(dispatchSource, ^{
         if (!isInterval) {
             dispatch_source_cancel(dispatchSource);
@@ -50,6 +47,12 @@
         }
 
     });
+    dispatch_time_t dispatchInterval = [timeout toUInt32] * NSEC_PER_MSEC;
+    dispatch_time_t dispatchTime = dispatch_time(DISPATCH_TIME_NOW, dispatchInterval);
+    dispatch_source_set_timer(dispatchSource,
+            dispatchTime,
+            isInterval ? dispatchInterval : DISPATCH_TIME_FOREVER,
+            self.tolerance * NSEC_PER_MSEC);
     dispatch_resume(dispatchSource);
     [_dispatchSourcesMapping setObject:dispatchSource forKey:timeoutID];
 

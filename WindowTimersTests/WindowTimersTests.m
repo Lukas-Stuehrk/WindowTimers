@@ -62,16 +62,16 @@ SPEC_BEGIN(WindowTimersTests)
             __block BOOL called = NO;
             context[@"callback"] = ^{
                 called = YES;
-                [[theValue(CACurrentMediaTime() - startTime) should] beLessThan:theValue(0.105)];
+                [[theValue(CACurrentMediaTime() - startTime) should] beLessThan:theValue(1.50)];
             };
 
             startTime = CACurrentMediaTime();
-            [context evaluateScript:@"setTimeout(callback, 100)"];
+            [context evaluateScript:@"setTimeout(callback, 1000)"];
 
             [[expectFutureValue(theValue(called)) shouldEventually] beYes];
         });
 
-        it(@"should pass the additional arguments to the callback", ^ {
+        it(@"should pass the additional arguments to the callback", ^{
             __block BOOL called = NO;
             context[@"callback"] = ^(JSValue *firstArg, JSValue *secondArg, JSValue *thirdArg) {
                 called = YES;
@@ -118,7 +118,8 @@ SPEC_BEGIN(WindowTimersTests)
             };
 
             [context evaluateScript:@"setInterval(callback, 100)"];
-            [[expectFutureValue(theValue(counter)) shouldEventually] beGreaterThan:theValue(10)];
+            [[expectFutureValue(theValue(counter)) shouldEventually] beGreaterThanOrEqualTo:
+                    theValue(10)];
         });
 
         it(@"should execute the given function within the given interval", ^{
